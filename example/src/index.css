@@ -1,0 +1,52 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.dark body {
+    background-color: #121c2a;
+    color: white;
+}
+
+.main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-block: 50px;
+}
+
+.wrapper {
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 40px;
+}
+
+.custom-select {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.custom-select-title {
+    margin-bottom: 10px;
+    width: fit-content;
+}
+
+.checkboxes {
+    color: hwb(0 40% 60%);
+    display: inline-block;
+    font-size: 12px;
+    font-style: italic;
+    margin-top: 1em;
+}
+
+.dark .checkboxes {
+    color: rgb(212, 212, 212);
+}

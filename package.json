@@ -1,0 +1,59 @@
+{
+    "name": "@theprojectsx/react-select",
+    "version": "0.1.0",
+    "description": "Custom Dropdown Select React Component",
+    "keywords": [
+        "react",
+        "react-select",
+        "react-component",
+        "dropdown"
+    ],
+    "homepage": "https://github.com/TheProjectsX/react-select#readme",
+    "bugs": {
+        "url": "https://github.com/TheProjectsX/react-select/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/TheProjectsX/react-select.git"
+    },
+    "license": "MIT",
+    "author": "TheProjectsX",
+    "type": "module",
+    "main": "dist/index.js",
+    "module": "dist/index.esm.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "rollup -c --bundleConfigAsCjs",
+        "predeploy": "cd example && npm run build",
+        "deploy": "gh-pages -d example/dist"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.27.1",
+        "@babel/plugin-transform-runtime": "^7.28.3",
+        "@babel/preset-env": "^7.27.2",
+        "@babel/preset-react": "^7.27.1",
+        "@rollup/plugin-babel": "^6.0.4",
+        "@rollup/plugin-commonjs": "^28.0.3",
+        "@rollup/plugin-node-resolve": "^16.0.1",
+        "@rollup/plugin-terser": "^0.4.4",
+        "@rollup/plugin-typescript": "^12.1.4",
+        "@types/react": "^19.1.12",
+        "@types/react-dom": "^19.1.9",
+        "react-icons": "^5.5.0",
+        "rollup": "^4.41.0",
+        "rollup-plugin-peer-deps-external": "^2.2.4",
+        "rollup-plugin-postcss": "^4.0.2",
+        "typescript": "^5.9.2"
+    },
+    "peerDependencies": {
+        "react": ">=16.8",
+        "react-dom": ">=16.8"
+    },
+    "dependencies": {
+        "@babel/runtime": "^7.28.4",
+        "tslib": "^2.8.1"
+    }
+}
