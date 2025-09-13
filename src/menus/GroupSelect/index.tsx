@@ -5,18 +5,20 @@ import { IoMdCheckmark } from "react-icons/io";
 interface Props {
     groups: GroupedOption[];
     currentItem: Option | null;
+    menuStyle?: React.CSSProperties;
     onChange: (item: Option) => void;
 }
 
 const GroupSelectMenu: React.FC<Props> = ({
     groups,
     currentItem,
+    menuStyle = {},
     onChange,
 }) => {
     const total = groups.reduce((c, g) => c + g.options.length, 0);
 
     return (
-        <div className="react-select__menu">
+        <div className="react-select__menu" style={menuStyle ?? {}}>
             {total > 0 ? (
                 groups.map((group, idx) => (
                     <React.Fragment key={idx}>
