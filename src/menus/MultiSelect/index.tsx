@@ -6,6 +6,7 @@ interface Props {
     options: Option[] | GroupedOption[];
     isGrouped?: boolean;
     currentItems: Option[];
+    menuStyle?: React.CSSProperties;
     onChange: (item: Option) => void;
 }
 
@@ -13,6 +14,7 @@ const MultiSelectMenu: React.FC<Props> = ({
     options,
     isGrouped,
     currentItems,
+    menuStyle = {},
     onChange,
 }) => {
     const isSelected = (item: Option) =>
@@ -60,7 +62,7 @@ const MultiSelectMenu: React.FC<Props> = ({
 
     const flatOptions = options as Option[];
     return (
-        <div className="react-select__menu">
+        <div className="react-select__menu" style={menuStyle ?? {}}>
             {flatOptions.length > 0 ? (
                 flatOptions.map((item, idx) => (
                     <RenderOption key={idx} item={item} />

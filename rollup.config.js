@@ -36,12 +36,12 @@ export default [
         output: [
             {
                 file: packageJson.main,
-                format: "esm",
+                format: "cjs",
                 exports: "named",
             },
             {
                 file: packageJson.module,
-                format: "cjs",
+                format: "esm",
                 exports: "named",
             },
         ],
