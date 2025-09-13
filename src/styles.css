@@ -72,6 +72,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: none;
+    outline: none;
+    border: none;
 }
 
 .react-select__clear-icon,

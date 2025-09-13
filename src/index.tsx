@@ -15,11 +15,14 @@ type ReactSelectProps = {
     options: Option[] | GroupedOption[];
     defaultValue?: Option | Option[] | null;
     placeholder?: string;
+    name?: string;
     isClearable?: boolean;
     isSearchable?: boolean;
     isDisabled?: boolean;
     isGrouped?: boolean;
     isMulti?: boolean;
+    parentStyle?: React.CSSProperties;
+    menuStyle?: React.CSSProperties;
     onChange?: (item: Option | Option[] | null) => void;
     onMenuStatusChange?: (status: boolean) => void;
     onSearch?: (value: string) => void;
@@ -29,11 +32,14 @@ const ReactSelect: React.FC<ReactSelectProps> = ({
     options,
     defaultValue,
     placeholder = "Select...",
+    name = "select",
     isClearable = true,
     isSearchable = true,
     isDisabled = false,
     isGrouped = false,
     isMulti = false,
+    parentStyle = {},
+    menuStyle = {},
     onChange,
     onMenuStatusChange,
     onSearch,
@@ -191,7 +197,7 @@ const ReactSelect: React.FC<ReactSelectProps> = ({
     return (
         <div
             className="react-select"
-            style={{ userSelect: "none" }}
+            style={{ userSelect: "none", ...(parentStyle ?? {}) }}
             ref={wrapperRef}
         >
             <div
@@ -201,9 +207,38 @@ const ReactSelect: React.FC<ReactSelectProps> = ({
             >
                 {/* Control */}
                 <div className="react-select__control">
+                    {/* A Input tag so that if this is under a <form>, it is possible to get the value using form.name.value. Well, of course, only if it's not multi select!
+                    It's outside label so that no event is triggered */}
+                    <input
+                        type="text"
+                        name={name}
+                        value={
+                            !Array.isArray(currentItem) && currentItem
+                                ? currentItem.value
+                                : ""
+                        }
+                        data-raw={
+                            currentItem
+                                ? JSON.stringify(currentItem)
+                                : isMulti
+                                ? "[]"
+                                : "{}"
+                        }
+                        readOnly
+                        hidden
+                    />
+
                     <label
-                        onClick={() => {
+                        onClick={(e) => {
                             setMenuOpened((prev) => !prev);
+                            console.log(e.currentTarget, e.target);
+                            return;
+                            if (!isSearchable) {
+                                if (e.currentTarget === e.target) {
+                                    setMenuOpened((prev) => !prev);
+                                }
+                            } else {
+                            }
                         }}
                         className={`react-select__control-label${
                             menuOpened
@@ -244,18 +279,16 @@ const ReactSelect: React.FC<ReactSelectProps> = ({
                             spellCheck="false"
                             autoCorrect="off"
                             autoCapitalize="off"
-                            onClick={() => {
-                                console.log("Clicked");
-                                // setMenuOpened((prev) => !prev);
-                            }}
                             className={`react-select__control-input`}
-                            {...(menuOpened
-                                ? {}
-                                : isMulti
-                                ? { value: "" }
-                                : !Array.isArray(currentItem) && currentItem
-                                ? { value: currentItem.label }
-                                : { value: "" })}
+                            value={
+                                menuOpened
+                                    ? currentViewingLabel
+                                    : isMulti
+                                    ? ""
+                                    : !Array.isArray(currentItem) && currentItem
+                                    ? currentItem.label
+                                    : ""
+                            }
                             onChange={(e) => {
                                 setMenuOpened((prev) => (prev ? prev : true));
                                 handleSearch(e.target.value);
@@ -266,19 +299,20 @@ const ReactSelect: React.FC<ReactSelectProps> = ({
                                 (isMulti &&
                                     Array.isArray(currentItem) &&
                                     currentItem.length > 0)) && (
-                                <div
+                                <button
+                                    type="button"
                                     className="react-select__clear-icon-wrapper"
                                     onClick={handleClearSelection}
                                 >
                                     <IoClose className="react-select__clear-icon" />
-                                </div>
+                                </button>
                             )}
-                        <div
+                        <button
+                            type="button"
                             className="react-select__dropdown-icon-wrapper"
-                            onClick={(e) => e.stopPropagation()}
                         >
                             <IoIosArrowDown className="react-select__dropdown-icon" />
-                        </div>
+                        </button>
                     </label>
                 </div>
 
@@ -292,6 +326,7 @@ const ReactSelect: React.FC<ReactSelectProps> = ({
                         currentItems={
                             Array.isArray(currentItem) ? currentItem : []
                         }
+                        menuStyle={menuStyle}
                         onChange={handleElementChanged}
                     />
                 )}
@@ -303,6 +338,7 @@ const ReactSelect: React.FC<ReactSelectProps> = ({
                         currentItem={
                             !Array.isArray(currentItem) ? currentItem : null
                         }
+                        menuStyle={menuStyle}
                         onChange={(item: Option) => {
                             handleElementChanged(item);
                             setTimeout(() => {
@@ -319,6 +355,7 @@ const ReactSelect: React.FC<ReactSelectProps> = ({
                         currentItem={
                             !Array.isArray(currentItem) ? currentItem : null
                         }
+                        menuStyle={menuStyle}
                         onChange={(item: Option) => {
                             handleElementChanged(item);
                             setMenuOpened(false);

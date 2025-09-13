@@ -5,16 +5,18 @@ import { IoMdCheckmark } from "react-icons/io";
 interface Props {
     options: Option[];
     currentItem: Option | null;
+    menuStyle?: React.CSSProperties;
     onChange: (item: Option) => void;
 }
 
 const SimpleSelectMenu: React.FC<Props> = ({
     options,
     currentItem,
+    menuStyle = {},
     onChange,
 }) => {
     return (
-        <div className="react-select__menu">
+        <div className="react-select__menu" style={menuStyle ?? {}}>
             {options.length > 0 ? (
                 options.map((item, idx) => (
                     <button
