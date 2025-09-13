@@ -75,6 +75,11 @@ function App() {
     const [isSearchable_04, setIsSearchable_04] = useState<boolean>(true);
     const [isDisabled_04, setIsDisabled_04] = useState<boolean>(false);
 
+    // Form
+    const [isClearable_05, setIsClearable_05] = useState<boolean>(true);
+    const [isSearchable_05, setIsSearchable_05] = useState<boolean>(true);
+    const [isDisabled_05, setIsDisabled_05] = useState<boolean>(false);
+
     const Checkbox: React.FC<
         React.PropsWithChildren<{
             checked: boolean;
@@ -289,6 +294,74 @@ function App() {
                             Disabled
                         </Checkbox>
                     </div>
+                </div>
+
+                {/* Using Form */}
+                <div className="custom-select">
+                    <h3 className="custom-select-title">
+                        Using Form w/o using onChange
+                    </h3>
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            const form = e.target as HTMLFormElement;
+                            console.log(
+                                form.dropdown.value,
+                                JSON.parse(form.dropdown.dataset.raw)
+                            );
+                        }}
+                        style={{
+                            width: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <ReactSelect
+                            options={simpleOptions}
+                            name="dropdown"
+                            defaultValue={simpleOptions[0]}
+                            isClearable={isClearable_05}
+                            isSearchable={isSearchable_05}
+                            isDisabled={isDisabled_05}
+                            onSearch={consoleElementSearch}
+                            onMenuStatusChange={consoleMenuOpen}
+                            onChange={consoleElement}
+                        />
+
+                        <div className="checkboxes">
+                            <Checkbox
+                                checked={isClearable_05}
+                                onChange={() => setIsClearable_05((s) => !s)}
+                            >
+                                Clearable
+                            </Checkbox>
+                            <Checkbox
+                                checked={isSearchable_05}
+                                onChange={() => setIsSearchable_05((s) => !s)}
+                            >
+                                Searchable
+                            </Checkbox>
+                            <Checkbox
+                                checked={isDisabled_05}
+                                onChange={() => setIsDisabled_05((s) => !s)}
+                            >
+                                Disabled
+                            </Checkbox>
+
+                            <button
+                                type="submit"
+                                style={{
+                                    paddingInline: "4px",
+                                    paddingBlock: "2px",
+                                    cursor: "pointer",
+                                }}
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </main>

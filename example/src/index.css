@@ -41,7 +41,8 @@
 
 .checkboxes {
     color: hwb(0 40% 60%);
-    display: inline-block;
+    display: flex;
+    align-items: center;
     font-size: 12px;
     font-style: italic;
     margin-top: 1em;
